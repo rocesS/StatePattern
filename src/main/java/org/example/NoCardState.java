@@ -6,11 +6,16 @@ public class NoCardState extends AtmState{
         super(atm);
     }
 
-
     @Override
     void insertCard() {
         System.out.println("Karta przyjęta, zmiana stanu: oczekiwanie pinu");
+            if (atm.getCash() <= 100) {
+                System.out.println("Zbyt mało pieniędzy w bankomacie - bankomat zmienia stan na zablokowany - przyjdz jutro");
+                atm.setState(new NoCashState(atm));
+                return;
+            }
         atm.setState(new NoPinState(atm));
+        System.out.println("Karta przyjęta, zmiana stanu: okiwianie pinu");
     }
 
     @Override
